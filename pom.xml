@@ -39,7 +39,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.6.4</version>
                 <configuration>
-                    <mainClass>kr.sesac.wordcounter.Main</mainClass>
+                    <mainClass>kr.sesac.wordcounter.WordCounterApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -30,7 +30,7 @@ README의 '시작하기' 절을 따라 프로젝트를 열고 실행한 다음 �
 3. TODO 3: 유효한 단어가 나올 때마다 횟수를 늘립니다.
 4. TODO 4: 원문 출력 대신 집계 결과를 출력해 [정답](../expected/basic-counts.tsv)과 비교합니다.
 
-정답은 전체 단어 9개, 종류 6개입니다. 개수뿐 아니라 단어별 횟수도 확인하세요. 처음에는 `Main` 하나에 반복문으로 구현해도 됩니다. TXT 하나가 맞으면 **CSV·TSV·HTML → 조회·정렬·저장 → 여러 파일과 오류 처리 → 큰 데이터** 순서로 [필수 요구사항](requirements.md)을 따라갑니다.
+정답은 전체 단어 9개, 종류 6개입니다. 개수뿐 아니라 단어별 횟수도 확인하세요. 처음에는 `WordCounterApp` 하나에 반복문으로 구현해도 됩니다. TXT 하나가 맞으면 **CSV·TSV·HTML → 조회·정렬·저장 → 여러 파일과 오류 처리 → 큰 데이터** 순서로 [필수 요구사항](requirements.md)을 따라갑니다.
 
 ## 3. 처음 쓰는 도구
 
@@ -65,7 +65,7 @@ id,text,note
 
 첫 레코드 `id,text,note`가 **헤더**(열 이름), `1,"Java, java!",연습`이 **레코드**(데이터 한 건), `Java, java!`가 `text` 열의 **셀**입니다. `"Java, java!"` 안의 쉼표는 글의 일부라서 `split(",")`로 나누면 잘못 잘립니다. Commons CSV는 이 따옴표 규칙을 해석해 셀을 꺼내주는 라이브러리입니다. CSV에서는 따옴표 안에 줄바꿈도 들어갈 수 있어 파일의 한 줄과 레코드 한 건이 항상 같지는 않습니다.
 
-`Main`과 같은 패키지(`kr.sesac.wordcounter`)에 `CsvPractice` 클래스를 만들어 이 클래스의 `main` 옆 Run으로 실행해보세요. 작업 디렉터리는 프로젝트 루트이고, 기존 `Main`은 그대로 두고 연습해도 됩니다.
+`WordCounterApp`과 같은 패키지(`kr.sesac.wordcounter`)에 `CsvPractice` 클래스를 만들어 이 클래스의 `main` 옆 Run으로 실행해보세요. 작업 디렉터리는 프로젝트 루트이고, 기존 `WordCounterApp`은 그대로 두고 연습해도 됩니다.
 
 ```java
 package kr.sesac.wordcounter;
@@ -121,7 +121,7 @@ HTML은 웹 문서의 구조를 표현하는 형식입니다.
 
 `<p>`와 `</p>`는 문단의 시작과 끝을 표시하는 **태그**, 태그와 내용을 합쳐 **요소**, `id="content"`는 요소에 이름을 붙이는 **속성**입니다. 집계할 글은 `Java를 공부합니다.`이며 태그 이름과 속성 값은 세지 않습니다. **CSS 선택자**는 원하는 요소를 찾는 표현이고, 이 과제의 `#content`는 `id`가 `content`인 요소를 뜻합니다. `script`·`style`처럼 태그 이름으로 찾을 수도 있습니다. CSS로 화면을 꾸미는 기능까지 배울 필요는 없습니다.
 
-jsoup은 HTML을 Java 객체로 읽고 선택자로 요소를 찾아 텍스트를 꺼내는 라이브러리입니다. 저장된 파일을 읽으므로 인터넷 연결이나 크롤링은 필요 없습니다. `Main`과 같은 패키지에 `HtmlPractice` 클래스를 만들어 실행해보세요.
+jsoup은 HTML을 Java 객체로 읽고 선택자로 요소를 찾아 텍스트를 꺼내는 라이브러리입니다. 저장된 파일을 읽으므로 인터넷 연결이나 크롤링은 필요 없습니다. `WordCounterApp`과 같은 패키지에 `HtmlPractice` 클래스를 만들어 실행해보세요.
 
 ```java
 package kr.sesac.wordcounter;
@@ -252,7 +252,7 @@ Commons CSV는 `for (CSVRecord record : parser)` 반복 중 만난 형식 오류
 <details>
 <summary>Maven Wrapper 명령</summary>
 
-`mvnw`(macOS·Linux)와 `mvnw.cmd`(Windows)는 이 프로젝트에 지정된 Maven을 다운로드해 실행하는 스크립트입니다. JDK 21은 준비되어 있어야 합니다. `pom.xml`이 있는 폴더에서 다음을 실행하면 컴파일 후 `Main`이 실행됩니다.
+`mvnw`(macOS·Linux)와 `mvnw.cmd`(Windows)는 이 프로젝트에 지정된 Maven을 다운로드해 실행하는 스크립트입니다. JDK 21은 준비되어 있어야 합니다. `pom.xml`이 있는 폴더에서 다음을 실행하면 컴파일 후 `WordCounterApp`이 실행됩니다.
 
 ```sh
 ./mvnw -q compile exec:java        # macOS·Linux

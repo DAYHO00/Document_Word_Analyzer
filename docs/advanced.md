@@ -227,7 +227,7 @@ URL 목록 파일 → 다운로드 → 원본 파일 저장 → 기존 파서·�
    </dependency>
    ```
 
-4. 연결을 확인합니다. `Main`과 같은 패키지에 `DbCheck` 클래스를 만들어 `main`에 넣고 Run 하세요. `Connection`, `DriverManager`, `Statement`, `ResultSet`, `SQLException`은 모두 `java.sql` 패키지에 있고, `SQLException`은 처리하거나 `throws`로 넘겨야 하는 예외입니다.
+4. 연결을 확인합니다. `WordCounterApp`과 같은 패키지에 `DbCheck` 클래스를 만들어 `main`에 넣고 Run 하세요. `Connection`, `DriverManager`, `Statement`, `ResultSet`, `SQLException`은 모두 `java.sql` 패키지에 있고, `SQLException`은 처리하거나 `throws`로 넘겨야 하는 예외입니다.
 
    ```java
    String url = "jdbc:mysql://localhost:3307/wordcount?rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&useSSL=false";
