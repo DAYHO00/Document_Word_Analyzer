@@ -18,12 +18,11 @@ public class TxtParser implements FileParser {
     }
 
     @Override
-    public int analyze(Path input, Map<String, Integer> map) throws IOException {
+    public long analyze(Path input, Map<String, Long> map) throws IOException {
 
-        int totalCount = 0;
+        long totalCount = 0;
 
         try (BufferedReader reader = Files.newBufferedReader(input, StandardCharsets.UTF_8)) {
-
             String line;
             while ((line = reader.readLine()) != null) {
                 totalCount += analyzer.countWords(line, map);

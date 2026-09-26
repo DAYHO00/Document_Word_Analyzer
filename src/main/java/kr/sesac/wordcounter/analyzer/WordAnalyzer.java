@@ -4,9 +4,10 @@ import java.util.Map;
 
 public class WordAnalyzer {
 
-    public int countWords(String text, Map<String, Integer> map) {
+    public long countWords(String text, Map<String, Long> map) {
 
-        int count = 0;
+        long count = 0;
+
         String[] tokens = text.split("[^A-Za-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]+");
 
         for (String token : tokens) {
@@ -21,7 +22,7 @@ public class WordAnalyzer {
 
             token = token.toLowerCase();
             count++;
-            map.put(token, map.getOrDefault(token, 0) + 1);
+            map.put(token, map.getOrDefault(token, 0L) + 1);
         }
 
         return count;

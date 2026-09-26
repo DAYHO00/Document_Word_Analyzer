@@ -1,6 +1,7 @@
 package kr.sesac.wordcounter.parser;
 
 import kr.sesac.wordcounter.analyzer.WordAnalyzer;
+import kr.sesac.wordcounter.exception.UnsupportedFileTypeException;
 
 import java.nio.file.Path;
 
@@ -18,8 +19,8 @@ public class ParserFactory {
 
         int index = fileName.lastIndexOf(".");
 
-        if(index==-1){
-            throw new IllegalArgumentException("확장자가 없는 파일입니다.");
+        if (index == -1) {
+            throw new UnsupportedFileTypeException("확장자가 없는 파일입니다.");
         }
 
         String extension = fileName.substring(index + 1).toLowerCase();
@@ -36,11 +37,12 @@ public class ParserFactory {
             case "tsv" :
                 parser = new TsvParser(analyzer);
                 break;
-            case "html" :
+            case "html":
+            case "htm" :
                 parser = new HtmlParser(analyzer);
                 break;
             default:
-                throw new IllegalArgumentException("지원하지 않는 파일형식입니다");
+                throw new UnsupportedFileTypeException("지원하지 않는 파일형식입니다.");
         }
 
         return parser;

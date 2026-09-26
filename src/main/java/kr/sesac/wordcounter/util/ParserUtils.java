@@ -31,7 +31,6 @@ public class ParserUtils {
         while (true) {
 
             String text = readText(scanner, prompt);
-
             if(text.isEmpty()){
                 return n;
             }

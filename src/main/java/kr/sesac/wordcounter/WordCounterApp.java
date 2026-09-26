@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class WordCounterApp {
 
     public static void main(String[] args) {
-
         WordCounterService wordCounterService = new WordCounterService();
 
         try (Scanner scanner = new Scanner(System.in)) {

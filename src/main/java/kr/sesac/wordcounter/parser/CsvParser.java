@@ -11,9 +11,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 
 public class CsvParser implements FileParser {
+
+    private static final List<String> TARGET_COLUMNS = List.of("text");
+//    private static final List<String> TARGET_COLUMNS = List.of("Q", "A");
 
     private final WordAnalyzer analyzer;
 
@@ -22,21 +26,33 @@ public class CsvParser implements FileParser {
     }
 
     @Override
-    public int analyze(Path input, Map<String, Integer> map) throws IOException {
-
-        int totalCount = 0;
+    public long analyze(Path input, Map<String, Long> map) throws IOException {
+        long totalCount = 0;
 
         try (BufferedReader reader = Files.newBufferedReader(input, StandardCharsets.UTF_8);
-
              CSVParser parser = CSVFormat.DEFAULT.builder()
-                             .setHeader()
-                             .setSkipHeaderRecord(true)
-                             .get()
-                             .parse(reader)) {
+                     .setHeader()
+                     .setSkipHeaderRecord(true)
+                     .setTrim(true)
+                     .get()
+                     .parse(reader)) {
+
+            if (parser.getHeaderMap().isEmpty()) {
+                throw new IllegalArgumentException("CSV 파일에 헤더가 없습니다.");
+            }
 
             for (CSVRecord record : parser) {
-                String text = record.get("text");
-                totalCount += analyzer.countWords(text, map);
+
+                if (record.size() != parser.getHeaderMap().size()) {
+                    throw new IllegalArgumentException(
+                            "헤더와 데이터의 열 개수가 일치하지 않습니다."
+                    );
+                }
+
+                for (String column : TARGET_COLUMNS) {
+                    String text = record.get(column);
+                    totalCount += analyzer.countWords(text, map);
+                }
             }
         }
 

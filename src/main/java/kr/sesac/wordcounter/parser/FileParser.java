@@ -5,5 +5,5 @@ import java.nio.file.Path;
 import java.util.Map;
 
 public interface FileParser {
-    int analyze( Path input, Map<String, Integer> map) throws IOException;
+    long analyze(Path input, Map<String, Long> map) throws IOException;
 }

@@ -11,9 +11,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 
 public class TsvParser implements FileParser {
+
+    private static final List<String> TARGET_COLUMNS = List.of("document");
 
     private final WordAnalyzer analyzer;
 
@@ -22,22 +25,37 @@ public class TsvParser implements FileParser {
     }
 
     @Override
-    public int analyze(Path input, Map<String, Integer> map) throws IOException {
+    public long analyze(Path input, Map<String, Long> map) throws IOException {
 
-        int totalCount = 0;
+        long totalCount = 0;
+
         try (BufferedReader reader = Files.newBufferedReader(input, StandardCharsets.UTF_8);
 
              CSVParser parser = CSVFormat.DEFAULT.builder()
-                             .setHeader()
-                             .setDelimiter('\t')
-                             .setSkipHeaderRecord(true)
-                             .get()
-                             .parse(reader)) {
+                     .setHeader()
+                     .setDelimiter('\t')
+                     .setSkipHeaderRecord(true)
+                     .setTrim(true)
+                     .setQuote(null)
+                     .get()
+                     .parse(reader)) {
+
+            if (parser.getHeaderMap().isEmpty()) {
+                throw new IllegalArgumentException("TSV 파일에 헤더가 없습니다.");
+            }
 
             for (CSVRecord record : parser) {
 
-                String text = record.get("document");
-                totalCount += analyzer.countWords(text, map);
+                if (record.size() != parser.getHeaderMap().size()) {
+                    throw new IllegalArgumentException(
+                            "헤더와 데이터의 열 개수가 일치하지 않습니다."
+                    );
+                }
+
+                for (String column : TARGET_COLUMNS) {
+                    String text = record.get(column);
+                    totalCount += analyzer.countWords(text, map);
+                }
             }
         }
 
