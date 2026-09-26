@@ -200,9 +200,7 @@ public class WordCounterService {
         }
 
         if (successFiles == 0) {
-            System.out.println(
-                    "성공한 파일이 없어 조회할 수 없습니다."
-            );
+            System.out.println("성공한 파일이 없어 조회할 수 없습니다.");
             return;
         }
 
@@ -334,7 +332,7 @@ public class WordCounterService {
                         + successFiles
                         + "개 / 실패 "
                         + failedFiles
-                        + "개 / 지원하지 않아 건너뜀 "
+                        + "개 / 건너뜀 "
                         + skippedFiles
                         + "개"
         );

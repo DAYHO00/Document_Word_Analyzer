@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class CsvParser implements FileParser {
 
-    private static final List<String> TARGET_COLUMNS = List.of("text");
-//    private static final List<String> TARGET_COLUMNS = List.of("Q", "A");
+//    private static final List<String> TARGET_COLUMNS = List.of("text");
+    private static final List<String> TARGET_COLUMNS = List.of("Q", "A");
 
     private final WordAnalyzer analyzer;
 

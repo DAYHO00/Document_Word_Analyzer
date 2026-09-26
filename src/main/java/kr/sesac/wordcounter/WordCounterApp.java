@@ -13,10 +13,8 @@ public class WordCounterApp {
         try (Scanner scanner = new Scanner(System.in)) {
 
             boolean running = true;
-
+            printMenu();
             while (running) {
-
-                printMenu();
 
                 int menu = ParserUtils.readInt(scanner, "선택 > ");
 
@@ -39,6 +37,7 @@ public class WordCounterApp {
                     case 5:
                         wordCounterService.printRecentSummary();
                         break;
+
                     case 0:
                         running = false;
                         System.out.println("프로그램을 종료합니다.");
