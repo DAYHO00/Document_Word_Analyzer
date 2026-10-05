@@ -27,18 +27,30 @@ public class CsvParser implements FileParser {
 
     @Override
     public long analyze(Path input, Map<String, Long> map) throws IOException {
+        CSVFormat format = CSVFormat.DEFAULT.builder()
+                .setHeader()
+                .setSkipHeaderRecord(true)
+                .setTrim(true)
+                .get();
+
+        return analyzeDelimited(input, map, analyzer, format, TARGET_COLUMNS, "CSV");
+    }
+
+    /*
+     * 문제점 : CsvParser와 TsvParser가 구분자·열 이름만 다르고 처리 로직이 거의 같음
+     * 원인 : 공통 처리 로직을 분리하지 않고 복사해서 사용함
+     * 수정자 : 정유진
+     */
+    static long analyzeDelimited(Path input, Map<String, Long> map, WordAnalyzer analyzer,
+                                 CSVFormat format, List<String> targetColumns, String formatName)
+            throws IOException {
         long totalCount = 0;
 
         try (BufferedReader reader = Files.newBufferedReader(input, StandardCharsets.UTF_8);
-             CSVParser parser = CSVFormat.DEFAULT.builder()
-                     .setHeader()
-                     .setSkipHeaderRecord(true)
-                     .setTrim(true)
-                     .get()
-                     .parse(reader)) {
+             CSVParser parser = format.parse(reader)) {
 
             if (parser.getHeaderMap().isEmpty()) {
-                throw new IllegalArgumentException("CSV 파일에 헤더가 없습니다.");
+                throw new IllegalArgumentException(formatName + " 파일에 헤더가 없습니다.");
             }
 
             for (CSVRecord record : parser) {
@@ -49,7 +61,7 @@ public class CsvParser implements FileParser {
                     );
                 }
 
-                for (String column : TARGET_COLUMNS) {
+                for (String column : targetColumns) {
                     String text = record.get(column);
                     totalCount += analyzer.countWords(text, map);
                 }
